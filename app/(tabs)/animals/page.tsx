@@ -14,25 +14,36 @@ export default function AnimalsPage() {
     useEffect(() => {
         const fetchAnimals = async () => {
             try {
-                // Tenta buscar do banco de dados
-                const res = await fetch('/api/content/cards?category=ANIMALS');
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.length > 0) {
-                        setAnimals(data);
-                        return;
+                let allAnimals: any[] = [];
+
+                // 1. Carrega estáticos
+                try {
+                    const staticRes = await fetch('/data/animals.json');
+                    if (staticRes.ok) {
+                        const staticData = await staticRes.json();
+                        allAnimals = [...staticData];
                     }
+                } catch (e) {
+                    console.error('Erro ao carregar animals.json', e);
                 }
 
-                // Fallback para arquivo JSON estático
-                console.log('Nenhum animal no banco, usando fallback...');
-                fetch('/data/animals.json')
-                    .then(res => res.json())
-                    .then(data => setAnimals(data))
-                    .catch(e => console.error(e));
+                // 2. Carrega do banco
+                try {
+                    const dynamicRes = await fetch('/api/content/cards?category=ANIMALS');
+                    if (dynamicRes.ok) {
+                        const dynamicData = await dynamicRes.json();
+                        if (Array.isArray(dynamicData) && dynamicData.length > 0) {
+                            allAnimals = [...allAnimals, ...dynamicData];
+                        }
+                    }
+                } catch (e) {
+                    console.error('Erro ao buscar animais do banco:', e);
+                }
+
+                setAnimals(allAnimals);
 
             } catch (error) {
-                console.error('Erro ao buscar animais:', error);
+                console.error('Erro geral ao buscar animais:', error);
             }
         };
 

@@ -14,25 +14,36 @@ export default function ObjectsPage() {
     useEffect(() => {
         const fetchObjects = async () => {
             try {
-                // Tenta buscar do banco de dados
-                const res = await fetch('/api/content/cards?category=OBJECTS');
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.length > 0) {
-                        setObjects(data);
-                        return;
+                let allObjects: any[] = [];
+
+                // 1. Carrega estáticos
+                try {
+                    const staticRes = await fetch('/data/objects.json');
+                    if (staticRes.ok) {
+                        const staticData = await staticRes.json();
+                        allObjects = [...staticData];
                     }
+                } catch (e) {
+                    console.error('Erro ao carregar objects.json', e);
                 }
 
-                // Fallback para arquivo JSON estático
-                console.log('Nenhum objeto no banco, usando fallback...');
-                fetch('/data/objects.json')
-                    .then(res => res.json())
-                    .then(data => setObjects(data))
-                    .catch(e => console.error(e));
+                // 2. Carrega do banco
+                try {
+                    const dynamicRes = await fetch('/api/content/cards?category=OBJECTS');
+                    if (dynamicRes.ok) {
+                        const dynamicData = await dynamicRes.json();
+                        if (Array.isArray(dynamicData) && dynamicData.length > 0) {
+                            allObjects = [...allObjects, ...dynamicData];
+                        }
+                    }
+                } catch (e) {
+                    console.error('Erro ao buscar objetos do banco:', e);
+                }
+
+                setObjects(allObjects);
 
             } catch (error) {
-                console.error('Erro ao buscar objetos:', error);
+                console.error('Erro geral ao buscar objetos:', error);
             }
         };
 

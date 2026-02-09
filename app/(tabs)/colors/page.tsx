@@ -24,25 +24,37 @@ export default function ColorsPage() {
     useEffect(() => {
         const fetchColors = async () => {
             try {
-                // Tenta buscar do banco de dados
-                const res = await fetch('/api/content/cards?category=COLORS');
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.length > 0) {
-                        setColors(data);
-                        return;
+                // 1. Carrega dados estáticos primeiro
+                let allColors: ColorItem[] = [];
+                try {
+                    const staticRes = await fetch('/data/colors.json');
+                    if (staticRes.ok) {
+                        const staticData = await staticRes.json();
+                        allColors = [...staticData];
                     }
+                } catch (e) {
+                    console.error('Erro ao carregar colors.json:', e);
                 }
 
-                // Fallback para o JSON estático se não tiver nada no banco
-                console.log('Nenhuma cor no banco, usando fallback...');
-                fetch('/data/colors.json')
-                    .then(res => res.json())
-                    .then(data => setColors(data))
-                    .catch(e => console.error(e));
+                // 2. Busca dados do banco de dados
+                try {
+                    const dynamicRes = await fetch('/api/content/cards?category=COLORS');
+                    if (dynamicRes.ok) {
+                        const dynamicData = await dynamicRes.json();
+                        if (Array.isArray(dynamicData) && dynamicData.length > 0) {
+                            // Mescla os dados, evitando duplicatas se necessário (por ID ou slug)
+                            // Aqui assumimos que IDs novos não conflitam com estáticos
+                            allColors = [...allColors, ...dynamicData];
+                        }
+                    }
+                } catch (e) {
+                    console.error('Erro ao buscar cores do banco:', e);
+                }
+
+                setColors(allColors);
 
             } catch (error) {
-                console.error('Erro ao buscar cores:', error);
+                console.error('Erro geral ao buscar cores:', error);
             }
         };
 
