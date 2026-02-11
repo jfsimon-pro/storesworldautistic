@@ -1,12 +1,6 @@
 
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import { getServerSession } from 'next-auth'; // Assuming you use next-auth, or your custom auth
-// If using custom auth via cookies/headers, adjust accordingly.
-// Based on previous files, it seems there might be a custom auth or just getting userId from request if possible.
-// Let's look at how other routes get the user. `app/api/admin/purchases/route.ts` didn't show auth check but it's admin.
-// `app/api/auth/[...nextauth]/route.ts` check? or `app/lib/auth.ts`?
-// I'll stick to a basic structure and refine auth if needed.
 
 const prisma = new PrismaClient();
 
