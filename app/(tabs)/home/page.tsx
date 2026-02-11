@@ -99,7 +99,7 @@ export default function HomePage() {
                     <a
                         href={user?.hasTelegramAccess
                             ? "https://t.me/+J6ta-zlEMtk0ZThh"
-                            : "https://pay.hotmart.com/O84341348Y"
+                            : "https://pay.hotmart.com/O84341348Y?off=vecyfw18&bid=1770782388997"
                         }
                         target="_blank"
                         rel="noopener noreferrer"
