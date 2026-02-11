@@ -27,6 +27,8 @@ export default function PurchasesAdminPage() {
     const [purchases, setPurchases] = useState<Purchase[]>([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState<string>('all');
+    const [productFilter, setProductFilter] = useState<string>('all');
+    const [availableProducts, setAvailableProducts] = useState<{ hotmartProductId: string, productName: string }[]>([]);
     const router = useRouter();
 
     // Pagination & Search
@@ -46,7 +48,7 @@ export default function PurchasesAdminPage() {
 
     useEffect(() => {
         loadPurchases();
-    }, [filter, offset, debouncedSearch]);
+    }, [filter, productFilter, offset, debouncedSearch]);
 
     async function loadPurchases() {
         try {
@@ -61,12 +63,19 @@ export default function PurchasesAdminPage() {
                 queryParams.append('status', filter);
             }
 
+            if (productFilter !== 'all') {
+                queryParams.append('productId', productFilter);
+            }
+
             const url = `/api/admin/purchases?${queryParams.toString()}`;
 
             const response = await fetch(url);
             const data = await response.json();
             setPurchases(data.purchases || []);
             setTotal(data.pagination.total);
+            if (data.products) {
+                setAvailableProducts(data.products);
+            }
         } catch (error) {
             console.error('Erro ao carregar compras:', error);
         } finally {
@@ -193,9 +202,35 @@ export default function PurchasesAdminPage() {
                                 fontWeight: 500,
                             }}
                         >
-                            {status === 'all' ? 'Todas' : status}
+                            {status === 'all' ? 'Todos Status' : status}
                         </button>
                     ))}
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <label style={{ fontWeight: 600, color: '#374151' }}>Produto:</label>
+                    <select
+                        value={productFilter}
+                        onChange={(e) => {
+                            setProductFilter(e.target.value);
+                            setOffset(0);
+                        }}
+                        style={{
+                            padding: '0.5rem 1rem',
+                            borderRadius: '0.375rem',
+                            border: '1px solid #D1D5DB',
+                            backgroundColor: 'white',
+                            color: '#374151',
+                            cursor: 'pointer',
+                        }}
+                    >
+                        <option value="all">Todos os Produtos</option>
+                        {availableProducts.map((product) => (
+                            <option key={product.hotmartProductId} value={product.hotmartProductId}>
+                                {product.productName}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <input

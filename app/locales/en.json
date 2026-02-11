@@ -1,4 +1,13 @@
 {
+    "notifications": {
+        "title": "Notifications",
+        "active": "Notifications Active",
+        "inactive": "Notifications Inactive",
+        "enable": "Enable",
+        "disable": "Disable",
+        "processing": "Processing...",
+        "error": "Error"
+    },
     "common": {
         "back": "Back",
         "loading": "Loading...",

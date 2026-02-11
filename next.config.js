@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+// Force restart: 1
 const nextConfig = {
   reactStrictMode: true,
 

@@ -13,6 +13,7 @@ export async function GET(request: Request) {
         const { searchParams } = new URL(request.url);
         const userId = searchParams.get('userId');
         const status = searchParams.get('status');
+        const productId = searchParams.get('productId');
         const limit = parseInt(searchParams.get('limit') || '50', 10);
         const offset = parseInt(searchParams.get('offset') || '0', 10);
         const search = searchParams.get('q') || '';
@@ -27,6 +28,10 @@ export async function GET(request: Request) {
             where.status = status;
         }
 
+        if (productId) {
+            where.hotmartProductId = productId;
+        }
+
         if (search) {
             where.OR = [
                 { buyerName: { contains: search, mode: 'insensitive' } },
@@ -34,7 +39,7 @@ export async function GET(request: Request) {
             ];
         }
 
-        const [purchases, total] = await Promise.all([
+        const [purchases, total, products] = await Promise.all([
             prisma.purchase.findMany({
                 where,
                 include: {
@@ -55,10 +60,15 @@ export async function GET(request: Request) {
                 skip: offset,
             }),
             prisma.purchase.count({ where }),
+            prisma.purchase.findMany({
+                select: { productName: true, hotmartProductId: true },
+                distinct: ['hotmartProductId'],
+            })
         ]);
 
         return NextResponse.json({
             purchases,
+            products,
             pagination: {
                 total,
                 limit,

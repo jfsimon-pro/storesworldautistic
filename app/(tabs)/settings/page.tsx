@@ -3,6 +3,7 @@
 import PageLayout from '../../components/PageLayout';
 import styles from '../../styles/Settings.module.css';
 import { useLanguage } from '../../context/LanguageContext';
+import NotificationSettings from '../../components/notifications/NotificationSettings';
 
 export default function SettingsPage() {
     const { language, setLanguage, t } = useLanguage();
@@ -41,6 +42,13 @@ export default function SettingsPage() {
                             >
                                 ES
                             </button>
+                        </div>
+                    </div>
+
+                    <div className={styles.section}>
+                        <h2 className={styles.sectionTitle}>Notificações</h2>
+                        <div style={{ marginTop: '10px' }}>
+                            <NotificationSettings />
                         </div>
                     </div>
 

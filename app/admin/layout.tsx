@@ -14,6 +14,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { name: 'Animais', href: '/admin/content/animals', icon: '🦁' },
         { name: 'Alimentos', href: '/admin/content/food', icon: '🍎' },
         { name: 'Objetos', href: '/admin/content/objects', icon: '⚽' },
+        { name: 'Notificações', href: '/admin/notifications', icon: '📢' },
         { name: 'Whitelist', href: '/admin/whitelist', icon: '✅' },
     ];
 

@@ -1,4 +1,13 @@
 {
+    "notifications": {
+        "title": "Notificações",
+        "active": "Notificações Ativas",
+        "inactive": "Notificações Desativadas",
+        "enable": "Ativar",
+        "disable": "Desativar",
+        "processing": "Processando...",
+        "error": "Erro"
+    },
     "common": {
         "back": "Voltar",
         "loading": "Carregando...",
