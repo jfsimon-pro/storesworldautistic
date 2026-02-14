@@ -13,23 +13,19 @@ export default function LogoutButton() {
         <button
             onClick={logout}
             style={{
-                position: 'fixed',
-                top: '1rem',
-                right: '1rem',
                 backgroundColor: 'rgba(255, 255, 255, 0.95)',
                 color: '#667eea',
                 border: '2px solid #667eea',
                 borderRadius: '10px',
-                padding: '0.5rem 1rem',
-                fontSize: '0.9rem',
+                padding: '0.4rem 0.8rem',
+                fontSize: '0.85rem',
                 fontWeight: 600,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem',
+                gap: '0.4rem',
                 boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
                 transition: 'all 0.3s ease',
-                zIndex: 1000,
             }}
             onMouseOver={(e) => {
                 e.currentTarget.style.backgroundColor = '#667eea';
