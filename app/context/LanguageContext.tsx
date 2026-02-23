@@ -41,10 +41,16 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         setMounted(true);
     }, []);
 
-    // Save language to localStorage when it changes
+    // Save language to localStorage and DB when it changes
     const setLanguage = useCallback((lang: Language) => {
         setLanguageState(lang);
         localStorage.setItem(STORAGE_KEY, lang);
+        // Persist to DB so admin can filter by language (fire-and-forget)
+        fetch('/api/user/language', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ language: lang }),
+        }).catch(() => {/* silent - not critical */});
     }, []);
 
     // Translation function with dot notation support
