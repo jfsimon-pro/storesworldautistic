@@ -439,3 +439,19 @@ model PushSubscription {
 
   @@index([userId])
 }
+
+model ScheduledNotification {
+  id          String    @id @default(cuid())
+  title       String
+  message     String
+  url         String?
+  targetLang  String    @default("all")
+  scheduledAt DateTime
+  sentAt      DateTime?
+  status      String    @default("PENDING") // PENDING, SENT, CANCELLED, FAILED
+  resultData  Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([status, scheduledAt])
+}

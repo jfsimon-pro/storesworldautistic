@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function AdminNotificationsPage() {
@@ -9,8 +9,39 @@ export default function AdminNotificationsPage() {
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');
     const [url, setUrl] = useState('/');
+    const [targetLang, setTargetLang] = useState('all');
+    const [scheduledAt, setScheduledAt] = useState('');
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<any>(null);
+    const [scheduledList, setScheduledList] = useState<any[]>([]);
+
+    useEffect(() => {
+        fetchScheduled();
+    }, []);
+
+    const fetchScheduled = async () => {
+        try {
+            const res = await fetch('/api/admin/notifications/scheduled');
+            const data = await res.json();
+            if (data.success) {
+                setScheduledList(data.notifications);
+            }
+        } catch (error) {
+            console.error('Error fetching scheduled notifications:', error);
+        }
+    };
+
+    const handleCancel = async (id: string) => {
+        if (!confirm('Deseja realmente cancelar este agendamento?')) return;
+        try {
+            const res = await fetch(`/api/admin/notifications/scheduled?id=${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                fetchScheduled(); // Refresh list
+            }
+        } catch (error) {
+            console.error('Error cancelling notification:', error);
+        }
+    };
 
     const handleSend = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -18,14 +49,27 @@ export default function AdminNotificationsPage() {
         setResult(null);
 
         try {
+            const payload: any = { title, message, url, targetLang };
+            if (scheduledAt) {
+                payload.scheduledAt = new Date(scheduledAt).toISOString();
+            }
+
             const response = await fetch('/api/admin/notifications/send', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, message, url }),
+                body: JSON.stringify(payload),
             });
 
             const data = await response.json();
             setResult(data);
+            if (data.success) {
+                setTitle('');
+                setMessage('');
+                setScheduledAt('');
+                if (scheduledAt) {
+                    fetchScheduled();
+                }
+            }
         } catch (error) {
             console.error('Error sending notification:', error);
             setResult({ error: 'Failed to send notification' });
@@ -83,6 +127,28 @@ export default function AdminNotificationsPage() {
                 <form onSubmit={handleSend} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                     <div>
                         <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem' }}>
+                            Público Alvo
+                        </label>
+                        <select
+                            value={targetLang}
+                            onChange={(e) => setTargetLang(e.target.value)}
+                            style={{
+                                width: '100%',
+                                padding: '0.75rem',
+                                borderRadius: '0.375rem',
+                                border: '1px solid #D1D5DB',
+                                backgroundColor: 'white',
+                            }}
+                        >
+                            <option value="all">Todos os Usuários</option>
+                            <option value="pt">Português (pt)</option>
+                            <option value="en">Inglês (en)</option>
+                            <option value="es">Espanhol (es)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem' }}>
                             Título da Notificação
                         </label>
                         <input
@@ -137,6 +203,24 @@ export default function AdminNotificationsPage() {
                         />
                     </div>
 
+                    <div>
+                        <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem' }}>
+                            Agendar para (Opcional)
+                        </label>
+                        <input
+                            type="datetime-local"
+                            value={scheduledAt}
+                            onChange={(e) => setScheduledAt(e.target.value)}
+                            style={{
+                                width: '100%',
+                                padding: '0.75rem',
+                                borderRadius: '0.375rem',
+                                border: '1px solid #D1D5DB',
+                                backgroundColor: 'white',
+                            }}
+                        />
+                    </div>
+
                     <button
                         type="submit"
                         disabled={loading}
@@ -152,7 +236,7 @@ export default function AdminNotificationsPage() {
                             marginTop: '1rem',
                         }}
                     >
-                        {loading ? 'Enviando...' : 'Enviar Notificação 🚀'}
+                        {loading ? 'Processando...' : scheduledAt ? 'Agendar Notificação 📅' : 'Enviar Imediatamente 🚀'}
                     </button>
                 </form>
 
@@ -169,7 +253,11 @@ export default function AdminNotificationsPage() {
                         {result.success ? (
                             <>
                                 <h3 style={{ fontWeight: 700, marginBottom: '0.5rem' }}>Sucesso!</h3>
-                                <p>Enviado para {result.sent} de {result.total} usuários inscritos.</p>
+                                {result.scheduledId ? (
+                                    <p>{result.message}</p>
+                                ) : (
+                                    <p>Enviado para {result.sent} de {result.total} usuários inscritos.</p>
+                                )}
                             </>
                         ) : (
                             <>
@@ -177,6 +265,47 @@ export default function AdminNotificationsPage() {
                                 <p>{result.error}</p>
                             </>
                         )}
+                    </div>
+                )}
+
+                {scheduledList.length > 0 && (
+                    <div style={{ marginTop: '3rem' }}>
+                        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem' }}>
+                            Agendamentos Pendentes
+                        </h2>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            {scheduledList.map(item => (
+                                <div key={item.id} style={{
+                                    border: '1px solid #E5E7EB',
+                                    borderRadius: '0.5rem',
+                                    padding: '1rem',
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center'
+                                }}>
+                                    <div>
+                                        <h4 style={{ fontWeight: 600 }}>{item.title}</h4>
+                                        <p style={{ color: '#6B7280', fontSize: '0.875rem' }}>
+                                            {new Date(item.scheduledAt).toLocaleString('pt-BR')} - {item.targetLang === 'all' ? 'Todos' : item.targetLang}
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() => handleCancel(item.id)}
+                                        style={{
+                                            padding: '0.5rem 1rem',
+                                            backgroundColor: '#EF4444',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '0.25rem',
+                                            cursor: 'pointer',
+                                            fontSize: '0.875rem'
+                                        }}
+                                    >
+                                        Cancelar
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 )}
             </div>

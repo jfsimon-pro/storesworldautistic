@@ -1,10 +1,8 @@
 
 // Rebuild trigger
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/app/lib/prisma';
 import webPush from 'web-push';
-
-const prisma = new PrismaClient();
 
 // Configure web-push
 if (process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
@@ -18,14 +16,53 @@ if (process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { title, message, url, icon } = body;
+        const { title, message, url, icon, targetLang, scheduledAt } = body;
 
         if (!title || !message) {
             return NextResponse.json({ error: 'Title and message are required' }, { status: 400 });
         }
 
-        // Fetch all subscriptions
-        const subscriptions = await prisma.pushSubscription.findMany();
+        // If scheduledAt is provided and is in the future, save it instead of sending
+        if (scheduledAt) {
+            const scheduledDate = new Date(scheduledAt);
+            if (scheduledDate > new Date()) {
+                const scheduledNotification = await prisma.scheduledNotification.create({
+                    data: {
+                        title,
+                        message,
+                        url,
+                        targetLang: targetLang || 'all',
+                        scheduledAt: scheduledDate,
+                        status: 'PENDING'
+                    }
+                });
+                return NextResponse.json({
+                    success: true,
+                    message: 'Notification scheduled successfully',
+                    scheduledId: scheduledNotification.id
+                });
+            }
+        }
+
+        // Build query based on targetLang
+        const whereClause: any = {};
+        if (targetLang && targetLang !== 'all') {
+            whereClause.user = {
+                language: targetLang
+            };
+        }
+
+        // Fetch subscriptions based on filter
+        const subscriptions = await prisma.pushSubscription.findMany({
+            where: whereClause,
+            include: {
+                user: {
+                    select: {
+                        language: true
+                    }
+                }
+            }
+        });
 
         if (subscriptions.length === 0) {
             return NextResponse.json({ success: false, error: 'Nenhum usuário inscrito encontrada. Inscreva-se na página de configurações para testar.' });
