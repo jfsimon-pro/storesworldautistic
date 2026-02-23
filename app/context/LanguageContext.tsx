@@ -45,12 +45,14 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const setLanguage = useCallback((lang: Language) => {
         setLanguageState(lang);
         localStorage.setItem(STORAGE_KEY, lang);
-        // Persist to DB so admin can filter by language (fire-and-forget)
+        // Persist to DB so admin can filter by language
         fetch('/api/user/language', {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ language: lang }),
-        }).catch(() => {/* silent - not critical */});
+        }).then(res => {
+            if (!res.ok) console.warn('[Language] Failed to sync to DB:', res.status);
+        }).catch(err => console.warn('[Language] Network error syncing to DB:', err));
     }, []);
 
     // Translation function with dot notation support

@@ -107,20 +107,26 @@ export default function AdminNotificationsPage() {
                         Envie mensagens para todos os usuários inscritos no PWA
                     </p>
                     {subscriptionCount !== null && (
-                        <p style={{
-                            marginTop: '0.5rem',
-                            color: subscriptionCount === 0 ? '#DC2626' : '#059669',
-                            fontWeight: 600,
-                            fontSize: '0.9rem',
-                            cursor: subscriptionCount > 0 ? 'pointer' : 'default',
-                            textDecoration: subscriptionCount > 0 ? 'underline' : 'none',
-                        }}
-                            onClick={() => subscriptionCount > 0 && setShowSubscribers(v => !v)}
-                        >
-                            {subscriptionCount === 0
-                                ? '⚠️ Nenhuma inscrição ativa no banco de dados'
-                                : `✅ ${subscriptionCount} inscrição(ões) ativa(s) no banco ${showSubscribers ? '▲' : '▼'}`}
-                        </p>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.5rem' }}>
+                            <p style={{
+                                color: subscriptionCount === 0 ? '#DC2626' : '#059669',
+                                fontWeight: 600,
+                                fontSize: '0.9rem',
+                                cursor: subscriptionCount > 0 ? 'pointer' : 'default',
+                                textDecoration: subscriptionCount > 0 ? 'underline' : 'none',
+                                margin: 0,
+                            }}
+                                onClick={() => subscriptionCount > 0 && setShowSubscribers(v => !v)}
+                            >
+                                {subscriptionCount === 0
+                                    ? '⚠️ Nenhuma inscrição ativa no banco de dados'
+                                    : `✅ ${subscriptionCount} inscrição(ões) ativa(s) no banco ${showSubscribers ? '▲' : '▼'}`}
+                            </p>
+                            <button onClick={fetchScheduled} title="Atualizar lista" style={{
+                                background: 'none', border: '1px solid #D1D5DB', borderRadius: '0.25rem',
+                                cursor: 'pointer', padding: '0.1rem 0.4rem', fontSize: '0.8rem', color: '#6B7280'
+                            }}>↺ atualizar</button>
+                        </div>
                     )}
                     {showSubscribers && subscribers.length > 0 && (
                         <div style={{
