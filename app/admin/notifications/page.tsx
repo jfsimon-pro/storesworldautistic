@@ -14,6 +14,7 @@ export default function AdminNotificationsPage() {
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<any>(null);
     const [scheduledList, setScheduledList] = useState<any[]>([]);
+    const [subscriptionCount, setSubscriptionCount] = useState<number | null>(null);
 
     useEffect(() => {
         fetchScheduled();
@@ -25,6 +26,7 @@ export default function AdminNotificationsPage() {
             const data = await res.json();
             if (data.success) {
                 setScheduledList(data.notifications);
+                setSubscriptionCount(data.subscriptionCount ?? null);
             }
         } catch (error) {
             console.error('Error fetching scheduled notifications:', error);
@@ -101,6 +103,18 @@ export default function AdminNotificationsPage() {
                     <p style={{ color: '#6B7280' }}>
                         Envie mensagens para todos os usuários inscritos no PWA
                     </p>
+                    {subscriptionCount !== null && (
+                        <p style={{
+                            marginTop: '0.5rem',
+                            color: subscriptionCount === 0 ? '#DC2626' : '#059669',
+                            fontWeight: 600,
+                            fontSize: '0.9rem'
+                        }}>
+                            {subscriptionCount === 0
+                                ? '⚠️ Nenhuma inscrição ativa no banco de dados'
+                                : `✅ ${subscriptionCount} inscrição(ões) ativa(s) no banco`}
+                        </p>
+                    )}
                 </div>
                 <button
                     onClick={() => router.push('/admin')}

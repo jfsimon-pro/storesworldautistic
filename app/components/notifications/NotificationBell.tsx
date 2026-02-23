@@ -1,10 +1,12 @@
 'use client';
 
 import { usePushNotifications } from '../../hooks/usePushNotifications';
+import { useAuth } from '../../hooks/useAuth';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function NotificationBell() {
-    const { isSubscribed, subscribeToPush, unsubscribeFromPush, loading } = usePushNotifications();
+    const { user } = useAuth();
+    const { isSubscribed, subscribeToPush, unsubscribeFromPush, loading } = usePushNotifications(user?.id);
     const { t } = useLanguage();
 
     const handleToggle = () => {

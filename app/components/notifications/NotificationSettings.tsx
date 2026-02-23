@@ -2,11 +2,13 @@
 'use client';
 
 import { usePushNotifications } from '@/app/hooks/usePushNotifications';
+import { useAuth } from '@/app/hooks/useAuth';
 import styles from '../../styles/Settings.module.css';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function NotificationSettings() {
-    const { isSubscribed, subscribeToPush, unsubscribeFromPush, loading, error } = usePushNotifications();
+    const { user } = useAuth();
+    const { isSubscribed, subscribeToPush, unsubscribeFromPush, loading, error } = usePushNotifications(user?.id);
     const { t } = useLanguage();
 
     return (

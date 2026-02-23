@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 const publicVapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
 
-export function usePushNotifications() {
+export function usePushNotifications(userId?: string) {
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [subscription, setSubscription] = useState<PushSubscription | null>(null);
     const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
@@ -12,14 +12,18 @@ export function usePushNotifications() {
 
     useEffect(() => {
         if (typeof window !== 'undefined' && 'serviceWorker' in navigator && 'PushManager' in window) {
-            // Register service worker if not already registered (though usually done in layout or main entry)
-            // Ideally we just get the registration
             navigator.serviceWorker.ready.then(reg => {
                 setRegistration(reg);
                 reg.pushManager.getSubscription().then(sub => {
                     if (sub) {
                         setSubscription(sub);
                         setIsSubscribed(true);
+                        // Re-sync subscription with backend in case DB record was lost
+                        fetch('/api/notifications/subscribe', {
+                            method: 'POST',
+                            body: JSON.stringify({ subscription: sub, userId: userId || null }),
+                            headers: { 'Content-Type': 'application/json' }
+                        }).catch(() => {/* silent - best effort sync */});
                     }
                     setLoading(false);
                 });
@@ -28,9 +32,10 @@ export function usePushNotifications() {
             setLoading(false);
             setError('Push notifications are not supported directly in this browser context (or Service Workers are disabled).');
         }
-    }, []);
+    }, [userId]);
 
-    const subscribeToPush = async (userId?: string) => {
+    const subscribeToPush = async (overrideUserId?: string) => {
+        const effectiveUserId = overrideUserId || userId || null;
         setLoading(true);
         setError(null);
         try {
@@ -67,13 +72,22 @@ export function usePushNotifications() {
             setIsSubscribed(true);
 
             // Send subscription to backend
-            await fetch('/api/notifications/subscribe', {
+            const res = await fetch('/api/notifications/subscribe', {
                 method: 'POST',
-                body: JSON.stringify({ subscription: sub, userId }),
+                body: JSON.stringify({ subscription: sub, userId: effectiveUserId }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+
+            if (!res.ok) {
+                console.error('Failed to save subscription to backend:', await res.text());
+                setError('Inscrição salva no navegador, mas houve um erro ao salvar no servidor. Tente novamente.');
+                setIsSubscribed(false);
+                await sub.unsubscribe();
+                setSubscription(null);
+                return;
+            }
 
             console.log('Subscribed to push notifications!');
         } catch (err: any) {
@@ -93,10 +107,16 @@ export function usePushNotifications() {
         setLoading(true);
         try {
             if (subscription) {
+                const endpoint = subscription.endpoint;
                 await subscription.unsubscribe();
                 setSubscription(null);
                 setIsSubscribed(false);
-                // Optionally notify backend to delete subscription
+                // Notify backend to delete subscription from DB
+                await fetch('/api/notifications/subscribe', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ endpoint }),
+                    headers: { 'Content-Type': 'application/json' }
+                }).catch(() => {/* silent */});
             }
         } catch (err: any) {
             setError(err.message);

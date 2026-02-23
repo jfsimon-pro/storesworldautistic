@@ -1,8 +1,6 @@
 
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '@/app/lib/prisma';
 
 export async function POST(request: Request) {
     try {
@@ -32,6 +30,23 @@ export async function POST(request: Request) {
         return NextResponse.json({ success: true, id: result.id });
     } catch (error) {
         console.error('Error saving subscription:', error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    }
+}
+
+export async function DELETE(request: Request) {
+    try {
+        const body = await request.json();
+        const { endpoint } = body;
+
+        if (!endpoint) {
+            return NextResponse.json({ error: 'Endpoint required' }, { status: 400 });
+        }
+
+        await prisma.pushSubscription.deleteMany({ where: { endpoint } });
+        return NextResponse.json({ success: true });
+    } catch (error) {
+        console.error('Error deleting subscription:', error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
