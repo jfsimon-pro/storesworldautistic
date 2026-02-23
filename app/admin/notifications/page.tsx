@@ -15,6 +15,8 @@ export default function AdminNotificationsPage() {
     const [result, setResult] = useState<any>(null);
     const [scheduledList, setScheduledList] = useState<any[]>([]);
     const [subscriptionCount, setSubscriptionCount] = useState<number | null>(null);
+    const [subscribers, setSubscribers] = useState<any[]>([]);
+    const [showSubscribers, setShowSubscribers] = useState(false);
 
     useEffect(() => {
         fetchScheduled();
@@ -27,6 +29,7 @@ export default function AdminNotificationsPage() {
             if (data.success) {
                 setScheduledList(data.notifications);
                 setSubscriptionCount(data.subscriptionCount ?? null);
+                setSubscribers(data.subscribers ?? []);
             }
         } catch (error) {
             console.error('Error fetching scheduled notifications:', error);
@@ -108,12 +111,56 @@ export default function AdminNotificationsPage() {
                             marginTop: '0.5rem',
                             color: subscriptionCount === 0 ? '#DC2626' : '#059669',
                             fontWeight: 600,
-                            fontSize: '0.9rem'
-                        }}>
+                            fontSize: '0.9rem',
+                            cursor: subscriptionCount > 0 ? 'pointer' : 'default',
+                            textDecoration: subscriptionCount > 0 ? 'underline' : 'none',
+                        }}
+                            onClick={() => subscriptionCount > 0 && setShowSubscribers(v => !v)}
+                        >
                             {subscriptionCount === 0
                                 ? '⚠️ Nenhuma inscrição ativa no banco de dados'
-                                : `✅ ${subscriptionCount} inscrição(ões) ativa(s) no banco`}
+                                : `✅ ${subscriptionCount} inscrição(ões) ativa(s) no banco ${showSubscribers ? '▲' : '▼'}`}
                         </p>
+                    )}
+                    {showSubscribers && subscribers.length > 0 && (
+                        <div style={{
+                            marginTop: '0.75rem',
+                            border: '1px solid #E5E7EB',
+                            borderRadius: '0.5rem',
+                            overflow: 'hidden',
+                            maxHeight: '260px',
+                            overflowY: 'auto',
+                            fontSize: '0.8rem',
+                        }}>
+                            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                                <thead>
+                                    <tr style={{ backgroundColor: '#F3F4F6' }}>
+                                        <th style={{ padding: '0.5rem', textAlign: 'left', borderBottom: '1px solid #E5E7EB' }}>Usuário</th>
+                                        <th style={{ padding: '0.5rem', textAlign: 'left', borderBottom: '1px solid #E5E7EB' }}>Email</th>
+                                        <th style={{ padding: '0.5rem', textAlign: 'left', borderBottom: '1px solid #E5E7EB' }}>Idioma</th>
+                                        <th style={{ padding: '0.5rem', textAlign: 'left', borderBottom: '1px solid #E5E7EB' }}>Inscrito em</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {subscribers.map((sub, i) => (
+                                        <tr key={sub.id} style={{ backgroundColor: i % 2 === 0 ? 'white' : '#F9FAFB' }}>
+                                            <td style={{ padding: '0.5rem', borderBottom: '1px solid #F3F4F6' }}>
+                                                {sub.user?.name ?? <span style={{ color: '#9CA3AF' }}>Anônimo</span>}
+                                            </td>
+                                            <td style={{ padding: '0.5rem', borderBottom: '1px solid #F3F4F6' }}>
+                                                {sub.user?.email ?? '—'}
+                                            </td>
+                                            <td style={{ padding: '0.5rem', borderBottom: '1px solid #F3F4F6' }}>
+                                                {sub.user?.language ?? '—'}
+                                            </td>
+                                            <td style={{ padding: '0.5rem', borderBottom: '1px solid #F3F4F6', color: '#6B7280' }}>
+                                                {new Date(sub.createdAt).toLocaleDateString('pt-BR')}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     )}
                 </div>
                 <button

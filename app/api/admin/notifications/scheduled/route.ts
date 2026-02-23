@@ -3,15 +3,27 @@ import prisma from '@/app/lib/prisma';
 
 export async function GET() {
     try {
-        const [scheduledNotifications, subscriptionCount] = await Promise.all([
+        const [scheduledNotifications, subscribers] = await Promise.all([
             prisma.scheduledNotification.findMany({
                 where: { status: 'PENDING' },
                 orderBy: { scheduledAt: 'asc' }
             }),
-            prisma.pushSubscription.count()
+            prisma.pushSubscription.findMany({
+                include: {
+                    user: {
+                        select: { id: true, name: true, email: true, language: true }
+                    }
+                },
+                orderBy: { createdAt: 'desc' }
+            })
         ]);
 
-        return NextResponse.json({ success: true, notifications: scheduledNotifications, subscriptionCount });
+        return NextResponse.json({
+            success: true,
+            notifications: scheduledNotifications,
+            subscriptionCount: subscribers.length,
+            subscribers
+        });
     } catch (error) {
         console.error('Error fetching scheduled notifications:', error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
