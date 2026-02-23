@@ -45,24 +45,18 @@ export async function POST(request: Request) {
         }
 
         // Build query based on targetLang
-        const whereClause: any = {};
+        let subscriptions;
         if (targetLang && targetLang !== 'all') {
-            whereClause.user = {
-                language: targetLang
-            };
-        }
-
-        // Fetch subscriptions based on filter
-        const subscriptions = await prisma.pushSubscription.findMany({
-            where: whereClause,
-            include: {
-                user: {
-                    select: {
-                        language: true
-                    }
+            // Filter by language: only subscriptions linked to a user with that language
+            subscriptions = await prisma.pushSubscription.findMany({
+                where: {
+                    user: { language: targetLang }
                 }
-            }
-        });
+            });
+        } else {
+            // No filter - fetch ALL subscriptions
+            subscriptions = await prisma.pushSubscription.findMany();
+        }
 
         if (subscriptions.length === 0) {
             return NextResponse.json({ success: false, error: 'Nenhum usuário inscrito encontrada. Inscreva-se na página de configurações para testar.' });
