@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   // webDir é ignorado quando server.url está definido (modo live server)
   webDir: 'out',
   server: {
-    url: 'https://appworldautistic.com',
+    url: 'https://seahorse-app-u8hng.ondigitalocean.app',
     cleartext: false,
     androidScheme: 'https',
   },
