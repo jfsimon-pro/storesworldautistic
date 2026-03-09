@@ -47,6 +47,9 @@ export async function POST(request: NextRequest) {
 
         // Verificar senha
         console.log('🔑 [ADMIN LOGIN API] Verificando senha...');
+        if (!user.passwordHash) {
+            return NextResponse.json({ error: 'Credenciais inválidas' }, { status: 401 });
+        }
         const passwordMatch = await bcrypt.compare(password, user.passwordHash);
 
         if (!passwordMatch) {
