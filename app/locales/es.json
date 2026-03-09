@@ -29,26 +29,39 @@
         "entering": "Entrando...",
         "requestAccess": "Solicitar acceso",
         "emailRequired": "Correo y contraseña son obligatorios",
+        "passwordRequired": "La contraseña es obligatoria",
         "loginError": "Error al iniciar sesión. Inténtalo de nuevo.",
-        "subscriberAccess": "Acceso de Suscriptor",
-        "enterEmailDescription": "Ingrese el correo electrónico utilizado en la compra de Hotmart para entrar.",
+        "invalidCredentials": "Correo o contraseña incorrectos.",
+        "subscriberAccess": "Iniciar Sesión",
+        "enterEmailDescription": "Ingresa tu correo y contraseña para acceder.",
         "emailPlaceholder": "ejemplo@email.com",
+        "passwordPlaceholder": "Tu contraseña",
         "subscriptionRequired": "Suscripción requerida. Verifique su correo de compra.",
         "verifying": "Verificando...",
-        "enterNow": "Entrar Ahora"
+        "enterNow": "Entrar",
+        "noAccount": "¿No tienes cuenta?",
+        "createAccount": "Crear cuenta"
     },
     "register": {
-        "name": "Nombre",
+        "title": "Crear Cuenta",
+        "name": "Nombre Completo",
         "email": "Correo electrónico",
+        "confirmEmail": "Confirmar Correo",
         "password": "Contraseña",
-        "confirmPassword": "Confirmar Contraseña",
-        "register": "Registrarse",
-        "registering": "Registrando...",
-        "alreadyHaveAccount": "Ya tengo una cuenta",
+        "agreeTerms": "Acepto los Términos de Uso",
+        "register": "Crear Cuenta",
+        "creating": "Creando cuenta...",
+        "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+        "signIn": "Iniciar Sesión",
+        "allFieldsRequired": "Todos los campos son obligatorios",
+        "emailsNotMatch": "Los correos no coinciden",
         "nameRequired": "El nombre es obligatorio",
         "invalidEmail": "Correo inválido",
         "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
-        "passwordsNotMatch": "Las contraseñas no coinciden"
+        "passwordsNotMatch": "Las contraseñas no coinciden",
+        "mustAgreeTerms": "Debes aceptar los Términos de Uso",
+        "success": "¡Cuenta creada! Redirigiendo...",
+        "error": "Error al crear la cuenta. Inténtalo de nuevo."
     },
     "home": {
         "activities": "Actividades",
@@ -61,7 +74,12 @@
     "settings": {
         "title": "Configuración",
         "language": "Idioma",
-        "logout": "Salir"
+        "logout": "Salir",
+        "deleteAccount": "Eliminar Cuenta",
+        "deleteAccountConfirm": "¿Estás seguro? Esta acción es irreversible y todos tus datos serán eliminados.",
+        "deleteAccountConfirmBtn": "Sí, eliminar",
+        "deleteAccountCancel": "Cancelar",
+        "deleteAccountError": "Error al eliminar la cuenta. Inténtalo de nuevo."
     },
     "activities": {
         "numbers": "Números",

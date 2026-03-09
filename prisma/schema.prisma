@@ -298,7 +298,7 @@ model Story {
 model User {
   id                    String             @id @default(cuid())
   email                 String             @unique
-  passwordHash          String
+  passwordHash          String?
   name                  String
   role                  Role               @default(USER)
   avatar                String?
@@ -312,6 +312,7 @@ model User {
   subscriptionExpiresAt DateTime?
   subscriptionStatus    String?            @default("inactive")
   hasTelegramAccess     Boolean            @default(false)
+  appleId               String?            @unique
 
   activityProgress      ActivityProgress[]
   gameProgress          GameProgress[]

@@ -29,26 +29,39 @@
         "entering": "Entrando...",
         "requestAccess": "Solicitar acesso",
         "emailRequired": "Email e senha são obrigatórios",
+        "passwordRequired": "Senha é obrigatória",
         "loginError": "Erro ao fazer login. Tente novamente.",
-        "subscriberAccess": "Acesso de Assinante",
-        "enterEmailDescription": "Digite o email usado na compra da Hotmart para entrar.",
+        "invalidCredentials": "Email ou senha incorretos.",
+        "subscriberAccess": "Entrar",
+        "enterEmailDescription": "Digite seu email e senha para acessar.",
         "emailPlaceholder": "exemplo@email.com",
+        "passwordPlaceholder": "Sua senha",
         "subscriptionRequired": "Assinatura necessária. Verifique seu email de compra.",
         "verifying": "Verificando...",
-        "enterNow": "Entrar Agora"
+        "enterNow": "Entrar",
+        "noAccount": "Não tem uma conta?",
+        "createAccount": "Criar conta"
     },
     "register": {
-        "name": "Nome",
+        "title": "Criar Conta",
+        "name": "Nome Completo",
         "email": "Email",
+        "confirmEmail": "Confirmar Email",
         "password": "Senha",
-        "confirmPassword": "Confirmar Senha",
+        "agreeTerms": "Aceito os Termos de Uso",
         "register": "Cadastrar",
-        "registering": "Cadastrando...",
-        "alreadyHaveAccount": "Já tenho uma conta",
+        "creating": "Criando conta...",
+        "alreadyHaveAccount": "Já tem uma conta?",
+        "signIn": "Entrar",
+        "allFieldsRequired": "Todos os campos são obrigatórios",
+        "emailsNotMatch": "Os emails não coincidem",
         "nameRequired": "Nome é obrigatório",
         "invalidEmail": "Email inválido",
         "passwordMinLength": "A senha deve ter pelo menos 6 caracteres",
-        "passwordsNotMatch": "As senhas não coincidem"
+        "passwordsNotMatch": "As senhas não coincidem",
+        "mustAgreeTerms": "Você deve aceitar os Termos de Uso",
+        "success": "Conta criada com sucesso! Redirecionando...",
+        "error": "Erro ao criar conta. Tente novamente."
     },
     "home": {
         "activities": "Atividades",
@@ -67,7 +80,12 @@
     "settings": {
         "title": "Configurações",
         "language": "Idioma",
-        "logout": "Sair"
+        "logout": "Sair",
+        "deleteAccount": "Deletar Conta",
+        "deleteAccountConfirm": "Tem certeza? Esta ação é irreversível e todos os seus dados serão apagados.",
+        "deleteAccountConfirmBtn": "Sim, deletar",
+        "deleteAccountCancel": "Cancelar",
+        "deleteAccountError": "Erro ao deletar conta. Tente novamente."
     },
     "activities": {
         "numbers": "Números",

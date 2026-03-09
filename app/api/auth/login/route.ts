@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/app/lib/prisma';
+import bcrypt from 'bcryptjs';
 import { generateAccessToken, generateRefreshToken, getRefreshTokenExpiration } from '@/app/lib/auth';
 import { setAuthCookies } from '@/app/lib/cookies';
 
@@ -7,69 +8,54 @@ export async function POST(request: NextRequest) {
     try {
         console.log('\n🟢 [LOGIN API] ==================');
         const body = await request.json();
-        const { email } = body;
+        const { email, password } = body;
         console.log('📧 [LOGIN API] Email:', email);
 
         // Validações básicas
-        if (!email) {
-            console.log('❌ [LOGIN API] Validação falhou: email vazio');
+        if (!email || !password) {
+            console.log('❌ [LOGIN API] Validação falhou: email ou senha vazio');
             return NextResponse.json(
-                { error: 'Email é obrigatório' },
+                { error: 'Email e senha são obrigatórios' },
                 { status: 400 }
             );
         }
 
-        // Buscar usuário e validação rigorosa de assinatura
+        // Buscar usuário
         console.log('🔍 [LOGIN API] Buscando usuário...');
         const user = await prisma.user.findUnique({
             where: { email },
-        }) as any; // Casting to any to avoid TS errors with potentially outdated client generation
+        }) as any;
 
         // 1. Verifica se usuário existe
         if (!user) {
             console.log('❌ [LOGIN API] Usuário não encontrado');
             return NextResponse.json(
-                { error: 'Email não encontrado' },
-                { status: 404 }
+                { error: 'Email ou senha incorretos', details: 'invalid_credentials' },
+                { status: 401 }
             );
         }
 
         console.log('✅ [LOGIN API] Usuário encontrado:', user.id);
-        console.log('📊 [LOGIN API] Status Assinatura:', user.subscriptionStatus);
-        console.log('⏳ [LOGIN API] Tem Assinatura Ativa:', user.hasActiveSubscription);
-        console.log('📅 [LOGIN API] Expira em:', user.subscriptionExpiresAt);
 
-        // 2. Validação RIGOROSA de status da assinatura (Exceto Admin)
-        if (user.role !== 'ADMIN') {
-            // Verificar whitelist primeiro
-            const whitelisted = await (prisma as any).whitelist.findUnique({
-                where: { email: user.email.toLowerCase().trim() }
-            });
-
-            if (whitelisted) {
-                console.log('✅ [LOGIN API] Acesso liberado por Whitelist:', user.email);
-            } else {
-                const isStatusActive = user.subscriptionStatus === 'active';
-                const isNotExpired = user.subscriptionExpiresAt ? new Date(user.subscriptionExpiresAt) > new Date() : false;
-
-                // A flag hasActiveSubscription é apenas um cache, a verdade está no status e data
-                const isValidAccess = isStatusActive && isNotExpired;
-
-                if (!isValidAccess) {
-                    console.log('❌ [LOGIN API] Acesso negado: assinatura inválida, expirada ou cancelada');
-                    console.log(`Diagnostic: Status=${user.subscriptionStatus}, Expired=${!isNotExpired}`);
-                    return NextResponse.json(
-                        {
-                            error: 'Assinatura necessária ou expirada',
-                            details: 'subscription_required'
-                        },
-                        { status: 403 }
-                    );
-                }
-            }
+        // 2. Verificar senha (admins também usam senha)
+        if (!user.passwordHash) {
+            console.log('❌ [LOGIN API] Usuário sem senha definida');
+            return NextResponse.json(
+                { error: 'Email ou senha incorretos', details: 'invalid_credentials' },
+                { status: 401 }
+            );
         }
 
-        console.log('✅ [LOGIN API] Acesso autorizado (Validação Rigorosa Ok)');
+        const passwordMatch = await bcrypt.compare(password, user.passwordHash);
+        if (!passwordMatch) {
+            console.log('❌ [LOGIN API] Senha incorreta');
+            return NextResponse.json(
+                { error: 'Email ou senha incorretos', details: 'invalid_credentials' },
+                { status: 401 }
+            );
+        }
+
+        console.log('✅ [LOGIN API] Credenciais válidas');
 
         // Gerar tokens JWT
         console.log('🎫 [LOGIN API] Gerando tokens...');
@@ -130,7 +116,7 @@ export async function POST(request: NextRequest) {
         });
 
         const finalResponse = setAuthCookies(response, accessToken, refreshToken);
-        console.log('✅ [LOGIN API] Login concluído com sucesso (modo email-only)\n');
+        console.log('✅ [LOGIN API] Login concluído com sucesso\n');
 
         return finalResponse;
     } catch (error) {

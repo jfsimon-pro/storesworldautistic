@@ -29,26 +29,39 @@
         "entering": "Signing in...",
         "requestAccess": "Request access",
         "emailRequired": "Email and password are required",
+        "passwordRequired": "Password is required",
         "loginError": "Login failed. Please try again.",
-        "subscriberAccess": "Subscriber Access",
-        "enterEmailDescription": "Enter the email used in your Hotmart purchase to sign in.",
+        "invalidCredentials": "Incorrect email or password.",
+        "subscriberAccess": "Sign In",
+        "enterEmailDescription": "Enter your email and password to access.",
         "emailPlaceholder": "example@email.com",
+        "passwordPlaceholder": "Your password",
         "subscriptionRequired": "Subscription required. Check your purchase email.",
         "verifying": "Verifying...",
-        "enterNow": "Enter Now"
+        "enterNow": "Sign In",
+        "noAccount": "Don't have an account?",
+        "createAccount": "Create account"
     },
     "register": {
-        "name": "Name",
+        "title": "Create Account",
+        "name": "Full Name",
         "email": "Email",
+        "confirmEmail": "Confirm Email",
         "password": "Password",
-        "confirmPassword": "Confirm Password",
-        "register": "Register",
-        "registering": "Registering...",
-        "alreadyHaveAccount": "I already have an account",
+        "agreeTerms": "I agree to the Terms of Use",
+        "register": "Create Account",
+        "creating": "Creating account...",
+        "alreadyHaveAccount": "Already have an account?",
+        "signIn": "Sign In",
+        "allFieldsRequired": "All fields are required",
+        "emailsNotMatch": "Emails do not match",
         "nameRequired": "Name is required",
         "invalidEmail": "Invalid email",
         "passwordMinLength": "Password must be at least 6 characters",
-        "passwordsNotMatch": "Passwords do not match"
+        "passwordsNotMatch": "Passwords do not match",
+        "mustAgreeTerms": "You must accept the Terms of Use",
+        "success": "Account created! Redirecting...",
+        "error": "Error creating account. Please try again."
     },
     "home": {
         "activities": "Activities",
@@ -67,7 +80,12 @@
     "settings": {
         "title": "Settings",
         "language": "Language",
-        "logout": "Logout"
+        "logout": "Logout",
+        "deleteAccount": "Delete Account",
+        "deleteAccountConfirm": "Are you sure? This action is irreversible and all your data will be deleted.",
+        "deleteAccountConfirmBtn": "Yes, delete",
+        "deleteAccountCancel": "Cancel",
+        "deleteAccountError": "Error deleting account. Please try again."
     },
     "activities": {
         "numbers": "Numbers",
