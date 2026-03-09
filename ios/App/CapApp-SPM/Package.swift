@@ -12,7 +12,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/ionic-team/capacitor-swift-pm.git", exact: "8.2.0"),
-        .package(name: "CapacitorCommunityAppleSignIn", path: "../../../node_modules/@capacitor-community/apple-sign-in")
+        .package(url: "https://github.com/capacitor-community/apple-sign-in.git", exact: "7.1.0")
     ],
     targets: [
         .target(
