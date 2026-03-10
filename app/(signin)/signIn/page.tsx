@@ -278,6 +278,17 @@ export default function SignInPage() {
           )}
 
         </div>
+
+        {/* Footer links */}
+        <div style={{ textAlign: 'center', marginTop: '1.5rem', display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
+          <Link href="/privacy" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', textDecoration: 'none' }}>
+            Privacy Policy
+          </Link>
+          <Link href="/support" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', textDecoration: 'none' }}>
+            Support
+          </Link>
+        </div>
+
       </div>
 
     </div>

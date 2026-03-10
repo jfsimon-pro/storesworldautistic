@@ -21,34 +21,18 @@ export function useAppleSignIn() {
       let fullName: string | null = null;
       let email: string | null = null;
 
-      if (isNativeApp()) {
-        // Fluxo nativo iOS via plugin Capacitor
-        const { SignInWithApple } = await import('@capacitor-community/apple-sign-in');
-        const result = await SignInWithApple.authorize({
-          clientId: 'com.worldautistic.app',
-          redirectURI: '', // não usado no nativo
-          scopes: 'email name',
-        });
-
-        identityToken = result.response.identityToken;
-        fullName = result.response.givenName
-          ? `${result.response.givenName} ${result.response.familyName || ''}`.trim()
-          : null;
-        email = result.response.email || null;
-      } else {
-        // Fluxo web — Apple Sign In JS SDK
-        // O SDK é carregado via script tag no layout (ver app/layout.tsx)
-        const appleAuth = (window as any).AppleID?.auth;
-        if (!appleAuth) {
-          throw new Error('Apple Sign In not available in this browser.');
-        }
-        const result = await appleAuth.signIn();
-        identityToken = result.authorization.id_token;
-        fullName = result.user?.name
-          ? `${result.user.name.firstName || ''} ${result.user.name.lastName || ''}`.trim()
-          : null;
-        email = result.user?.email || null;
+      // Fluxo web — Apple Sign In JS SDK (funciona em browser e WKWebView iOS)
+      // O SDK é carregado via script tag no layout (ver app/layout.tsx)
+      const appleAuth = (window as any).AppleID?.auth;
+      if (!appleAuth) {
+        throw new Error('Apple Sign In not available in this browser.');
       }
+      const result = await appleAuth.signIn();
+      identityToken = result.authorization.id_token;
+      fullName = result.user?.name
+        ? `${result.user.name.firstName || ''} ${result.user.name.lastName || ''}`.trim()
+        : null;
+      email = result.user?.email || null;
 
       // Envia token para o backend validar
       const response = await fetch('/api/auth/apple', {
