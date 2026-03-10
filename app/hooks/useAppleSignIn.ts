@@ -15,8 +15,8 @@ export function useAppleSignIn() {
       let fullName: string | null = null;
       let email: string | null = null;
 
-      // Fluxo web — Apple Sign In JS SDK (funciona em browser e WKWebView iOS)
-      // O SDK é carregado via script tag no layout (ver app/layout.tsx)
+      // Web flow — Apple Sign In JS SDK (works in browser and WKWebView iOS)
+      // SDK is loaded via script tag in layout (see app/layout.tsx)
       const appleAuth = (window as any).AppleID?.auth;
       if (!appleAuth) {
         throw new Error('Apple Sign In not available in this browser.');
