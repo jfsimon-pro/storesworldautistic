@@ -62,7 +62,7 @@ export default function SignInPage() {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
       setShowInstallButton(true);
-      console.log('✅ PWA Install Prompt captured');
+      console.log('✅ PWA Install captured');
     };
 
     window.addEventListener('beforeinstallprompt', handler);
