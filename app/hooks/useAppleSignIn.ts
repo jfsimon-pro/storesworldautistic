@@ -2,12 +2,6 @@
 
 import { useState } from 'react';
 
-// Detecta se está rodando dentro do app Capacitor nativo
-function isNativeApp(): boolean {
-  return typeof (window as any).Capacitor !== 'undefined' &&
-    (window as any).Capacitor.isNativePlatform?.();
-}
-
 export function useAppleSignIn() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
