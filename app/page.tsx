@@ -36,7 +36,7 @@ export default function SignInPage() {
         }
       } catch (error) {
         // Usuário não autenticado, continuar na página de login
-        console.log('Usuário não autenticado');
+        console.log('Usuário não autenticadoo');
       }
     };
 
