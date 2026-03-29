@@ -28,6 +28,7 @@ export default function PurchasesAdminPage() {
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState<string>('all');
     const [productFilter, setProductFilter] = useState<string>('all');
+    const [recurrentFilter, setRecurrentFilter] = useState<string>('all');
     const [availableProducts, setAvailableProducts] = useState<{ hotmartProductId: string, productName: string }[]>([]);
     const router = useRouter();
 
@@ -48,7 +49,7 @@ export default function PurchasesAdminPage() {
 
     useEffect(() => {
         loadPurchases();
-    }, [filter, productFilter, offset, debouncedSearch]);
+    }, [filter, productFilter, recurrentFilter, offset, debouncedSearch]);
 
     async function loadPurchases() {
         try {
@@ -65,6 +66,10 @@ export default function PurchasesAdminPage() {
 
             if (productFilter !== 'all') {
                 queryParams.append('productId', productFilter);
+            }
+
+            if (recurrentFilter !== 'all') {
+                queryParams.append('recurrent', recurrentFilter);
             }
 
             const url = `/api/admin/purchases?${queryParams.toString()}`;
@@ -203,6 +208,30 @@ export default function PurchasesAdminPage() {
                             }}
                         >
                             {status === 'all' ? 'Todos Status' : status}
+                        </button>
+                    ))}
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <label style={{ fontWeight: 600, color: '#374151' }}>Tipo:</label>
+                    {['all', 'true', 'false'].map((val) => (
+                        <button
+                            key={val}
+                            onClick={() => {
+                                setRecurrentFilter(val);
+                                setOffset(0);
+                            }}
+                            style={{
+                                padding: '0.5rem 1rem',
+                                backgroundColor: recurrentFilter === val ? '#8B5CF6' : 'white',
+                                color: recurrentFilter === val ? 'white' : '#374151',
+                                border: '1px solid #D1D5DB',
+                                borderRadius: '0.375rem',
+                                cursor: 'pointer',
+                                fontWeight: 500,
+                            }}
+                        >
+                            {val === 'all' ? 'Todos' : val === 'true' ? 'Recorrente' : 'Avulso'}
                         </button>
                     ))}
                 </div>

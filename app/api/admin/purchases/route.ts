@@ -17,6 +17,7 @@ export async function GET(request: Request) {
         const limit = parseInt(searchParams.get('limit') || '50', 10);
         const offset = parseInt(searchParams.get('offset') || '0', 10);
         const search = searchParams.get('q') || '';
+        const recurrent = searchParams.get('recurrent');
 
         const where: any = {};
 
@@ -30,6 +31,12 @@ export async function GET(request: Request) {
 
         if (productId) {
             where.hotmartProductId = productId;
+        }
+
+        if (recurrent === 'true') {
+            where.isRecurrent = true;
+        } else if (recurrent === 'false') {
+            where.isRecurrent = false;
         }
 
         if (search) {
