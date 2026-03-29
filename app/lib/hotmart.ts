@@ -74,6 +74,11 @@ export interface HotmartWebhookPayload {
         name: string;
       };
     };
+    subscriber?: {
+      code: string;
+      name: string;
+      email: string;
+    };
     producer?: {
       name: string;
     };
@@ -133,11 +138,12 @@ export function parseHotmartEvent(payload: HotmartWebhookPayload): ParsedHotmart
   }
 
   // Safely extract data with fallbacks
-  const transactionId = data.purchase?.transaction || data.subscription?.subscriber?.code || `UNKNOWN_${payload.id}`;
+  // SUBSCRIPTION_CANCELLATION sends email in data.subscriber, not data.buyer
+  const transactionId = data.purchase?.transaction || data.subscriber?.code || data.subscription?.subscriber?.code || `UNKNOWN_${payload.id}`;
   const productId = data.product?.id?.toString() || '0';
   const productName = data.product?.name || 'Unknown Product';
-  const buyerEmail = (data.buyer?.email || '').toLowerCase().trim();
-  const buyerName = data.buyer?.name || 'Unknown Buyer';
+  const buyerEmail = (data.buyer?.email || data.subscriber?.email || '').toLowerCase().trim();
+  const buyerName = data.buyer?.name || data.subscriber?.name || 'Unknown Buyer';
   const amount = data.purchase?.price?.value || 0;
   const currency = data.purchase?.price?.currency_code || 'BRL';
 
@@ -163,7 +169,7 @@ export function parseHotmartEvent(payload: HotmartWebhookPayload): ParsedHotmart
     purchaseDate,
     approvedDate,
     isRecurrent: !!data.subscription,
-    subscriptionId: data.subscription?.subscriber?.code,
+    subscriptionId: data.subscriber?.code || data.subscription?.subscriber?.code,
     subscriptionStatus: data.subscription?.status,
     status,
     rawData: payload,
