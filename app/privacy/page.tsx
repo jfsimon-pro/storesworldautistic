@@ -68,6 +68,7 @@ const content: ContentMap = {
         list: [
           'Neon (neon.tech) — PostgreSQL database hosting, United States (us-east-1). Stores all account and progress data.',
           'DigitalOcean — Application hosting, United States. Processes all web requests.',
+          'Cloudinary — Cloud media platform, United States. Stores and serves the images and audio files of the educational content (frequencies) within the app.',
           'Hotmart — Payment and subscription platform. Processes subscription transactions and shares subscription status via webhook. Governed by Hotmart\'s own Privacy Policy.',
           'Apple Inc. — Authentication provider (Sign in with Apple). Governed by Apple\'s own Privacy Policy.',
           'Google / Gmail SMTP — Forwards support messages submitted through the in-app support form.',
@@ -193,6 +194,7 @@ const content: ContentMap = {
         list: [
           'Neon (neon.tech) — Hospedagem do banco de dados PostgreSQL, Estados Unidos (us-east-1). Armazena todos os dados de conta e progresso.',
           'DigitalOcean — Hospedagem da aplicação, Estados Unidos. Processa todas as requisições web.',
+          'Cloudinary — Plataforma de mídia em nuvem, Estados Unidos. Armazena e serve as imagens e áudios do conteúdo educacional (frequências) do app.',
           'Hotmart — Plataforma de pagamento e assinaturas. Processa transações de assinatura e compartilha o status via webhook. Regido pela própria Política de Privacidade da Hotmart.',
           'Apple Inc. — Provedor de autenticação (Sign in with Apple). Regido pela própria Política de Privacidade da Apple.',
           'Google / Gmail SMTP — Encaminha mensagens de suporte enviadas pelo formulário dentro do app.',
@@ -318,6 +320,7 @@ const content: ContentMap = {
         list: [
           'Neon (neon.tech) — Alojamiento de base de datos PostgreSQL, Estados Unidos (us-east-1). Almacena todos los datos de cuenta y progreso.',
           'DigitalOcean — Alojamiento de la aplicación, Estados Unidos. Procesa todas las solicitudes web.',
+          'Cloudinary — Plataforma de medios en la nube, Estados Unidos. Almacena y sirve las imágenes y audios del contenido educativo (frecuencias) de la app.',
           'Hotmart — Plataforma de pagos y suscripciones. Procesa transacciones de suscripción y comparte el estado mediante webhook. Regido por la Política de Privacidad de Hotmart.',
           'Apple Inc. — Proveedor de autenticación (Sign in with Apple). Regido por la Política de Privacidad de Apple.',
           'Google / Gmail SMTP — Reenvía mensajes de soporte enviados a través del formulario dentro de la app.',

@@ -22,7 +22,7 @@ Ambas estão linkadas no rodapé da tela de login (`app/(signin)/signIn/page.tsx
 3. **Dados de saúde e dados sensíveis (LGPD Art. 11)** — TEA é dado sensível, base legal explícita, proibição de compartilhamento comercial
 4. Base legal por dado (LGPD) — execução de contrato, interesse legítimo, consentimento explícito
 5. Como usamos os dados — autenticação, personalização, assinatura, push, suporte, e-mail transacional
-6. **Terceiros processadores** — Neon (DB), DigitalOcean (hosting), **Hotmart (pagamentos)**, Apple (auth), Gmail SMTP (suporte)
+6. **Terceiros processadores** — Neon (DB), DigitalOcean (hosting), **Cloudinary (mídia/frequências)**, **Hotmart (pagamentos)**, Apple (auth), Gmail SMTP (suporte)
 7. **Transferência internacional** — dados nos EUA, base LGPD Art. 33
 8. **Cookies / token de sessão** — httpOnly, sem publicidade, sem rastreamento
 9. Armazenamento e segurança — TLS, bcrypt
