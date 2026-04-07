@@ -5,6 +5,14 @@ import { useLanguage } from '../context/LanguageContext';
 
 type Lang = 'pt' | 'en' | 'es';
 
+const alertBox: React.CSSProperties = {
+  backgroundColor: '#fff7ed',
+  border: '2px solid #fb923c',
+  borderRadius: '8px',
+  padding: '1rem 1.25rem',
+  marginBottom: '1rem',
+};
+
 const content: Record<Lang, {
   title: string;
   updated: string;
@@ -438,14 +446,6 @@ const content: Record<Lang, {
       },
     ],
   },
-};
-
-const alertBox: React.CSSProperties = {
-  backgroundColor: '#fff7ed',
-  border: '2px solid #fb923c',
-  borderRadius: '8px',
-  padding: '1rem 1.25rem',
-  marginBottom: '1rem',
 };
 
 export default function PrivacyPage() {
