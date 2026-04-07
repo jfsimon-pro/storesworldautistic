@@ -220,6 +220,24 @@ export default function SignInPage() {
           </form>
 
         </div>
+
+        {/* Legal links */}
+        <div style={{
+          display: 'flex',
+          gap: '1rem',
+          justifyContent: 'center',
+          marginTop: '1rem',
+          flexWrap: 'wrap',
+        }}>
+          <Link href="/terms" style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.8rem', textDecoration: 'underline' }}>
+            Termos de Uso
+          </Link>
+          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.8rem' }}>|</span>
+          <Link href="/privacy" style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.8rem', textDecoration: 'underline' }}>
+            Politica de Privacidade
+          </Link>
+        </div>
+
       </div>
 
     </div>

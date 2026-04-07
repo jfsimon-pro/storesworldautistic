@@ -7,12 +7,19 @@ import { setAuthCookies } from '@/app/lib/cookies';
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { name, email, password } = body;
+        const { name, email, password, termsAcceptedAt, healthConsentAt } = body;
 
         // Validações básicas
         if (!name || !email || !password) {
             return NextResponse.json(
                 { error: 'Todos os campos são obrigatórios' },
+                { status: 400 }
+            );
+        }
+
+        if (!termsAcceptedAt || !healthConsentAt) {
+            return NextResponse.json(
+                { error: 'É necessário aceitar os Termos de Uso e autorizar o tratamento de dados de saúde.' },
                 { status: 400 }
             );
         }
@@ -40,6 +47,10 @@ export async function POST(request: NextRequest) {
                 passwordHash,
                 role: 'USER',
                 language: 'pt',
+                termsAcceptedAt: new Date(termsAcceptedAt),
+                termsVersion: '2025-04-07',
+                healthConsentAt: new Date(healthConsentAt),
+                healthConsentVersion: '2025-04-07',
             },
         });
 

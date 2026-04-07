@@ -313,6 +313,12 @@ model User {
   subscriptionStatus    String?            @default("inactive")
   hasTelegramAccess     Boolean            @default(false)
 
+  // Consent records — required for LGPD proof of consent
+  termsAcceptedAt       DateTime?
+  termsVersion          String?
+  healthConsentAt       DateTime?
+  healthConsentVersion  String?
+
   activityProgress      ActivityProgress[]
   gameProgress          GameProgress[]
   purchases             Purchase[]

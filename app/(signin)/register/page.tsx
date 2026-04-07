@@ -10,6 +10,7 @@ export default function RegisterPage() {
   const [confirmEmail, setConfirmEmail] = useState('');
   const [password, setPassword] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(false);
+  const [agreeHealth, setAgreeHealth] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -36,7 +37,12 @@ export default function RegisterPage() {
     }
 
     if (!agreeTerms) {
-      setError('Você deve aceitar os Termos de Uso');
+      setError('Você deve aceitar os Termos de Uso e a Política de Privacidade');
+      return;
+    }
+
+    if (!agreeHealth) {
+      setError('Você deve autorizar o tratamento de dados relacionados à saúde para usar a plataforma');
       return;
     }
 
@@ -53,6 +59,8 @@ export default function RegisterPage() {
           name: fullName,
           email,
           password,
+          termsAcceptedAt: new Date().toISOString(),
+          healthConsentAt: new Date().toISOString(),
         }),
       });
 
@@ -180,7 +188,37 @@ export default function RegisterPage() {
                   <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                 </svg>
               </div>
-              <span className={styles['checkbox-text']}>Aceito os Termos de Uso</span>
+              <span className={styles['checkbox-text']}>
+                Aceito os{' '}
+                <Link href="/terms" target="_blank" style={{ color: '#FFE500', textDecoration: 'underline' }}>
+                  Termos de Uso
+                </Link>
+                {' '}e a{' '}
+                <Link href="/privacy" target="_blank" style={{ color: '#FFE500', textDecoration: 'underline' }}>
+                  Politica de Privacidade
+                </Link>
+              </span>
+            </label>
+
+            <label className={styles['checkbox-container']}>
+              <input
+                type="checkbox"
+                className={styles['checkbox-input']}
+                checked={agreeHealth}
+                onChange={(e) => setAgreeHealth(e.target.checked)}
+              />
+              <div className={styles['checkbox-custom']}>
+                <svg className={styles['checkbox-icon']} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                </svg>
+              </div>
+              <span className={styles['checkbox-text']}>
+                Autorizo o tratamento de dados relacionados a saude conforme a{' '}
+                <Link href="/privacy#dados-sensiveis" target="_blank" style={{ color: '#FFE500', textDecoration: 'underline' }}>
+                  secao de dados sensiveis
+                </Link>
+                {' '}da Politica de Privacidade (LGPD art. 11)
+              </span>
             </label>
 
             {/* Mensagens de erro e sucesso */}
