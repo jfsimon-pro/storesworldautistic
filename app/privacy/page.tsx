@@ -128,7 +128,19 @@ const content: ContentMap = {
         note: 'To exercise any of these rights, contact us at jfsimon.pro@gmail.com or use Settings → Delete Account for account deletion.',
       },
       {
-        title: '14. Changes to This Policy',
+        title: '14. Data Protection Officer (Encarregado — LGPD Art. 41)',
+        body: 'In accordance with LGPD Art. 41, we have designated a Data Protection Officer (Encarregado de Dados) responsible for receiving communications from data subjects and the ANPD:\n\nName: Jaime Simon\nEmail: jfsimon.pro@gmail.com\n\nYou may contact the Encarregado at any time to exercise your rights, submit complaints, or request information about how your data is processed.',
+      },
+      {
+        title: '15. Security Incidents and Breach Notification (LGPD Art. 48)',
+        body: 'In the event of a security incident that may pose risk or harm to data subjects, we will:\n\n• Notify the ANPD (Autoridade Nacional de Proteção de Dados) within 2 business days of becoming aware of the incident, as required by LGPD Art. 48.\n• Notify affected users promptly via email to the address registered on their account.\n• The notification will include: nature of the affected data, information about the data subjects involved, technical and security measures applied, and the risks related to the incident.',
+      },
+      {
+        title: '16. Users in the European Union (GDPR)',
+        body: 'If you are located in the European Union or European Economic Area, please note:\n\n• Brazil does not currently have an EU adequacy decision. Data transfers from the EU to Brazil are carried out based on your explicit consent and the necessity of contract performance.\n• You have the right to lodge a complaint with your local data protection supervisory authority.\n• We do not have a formal EU representative as required by GDPR Art. 27. If you are an EU resident regularly using this service, we recommend contacting us directly at jfsimon.pro@gmail.com for any data protection concerns.\n• The legal bases for processing your data remain as described in Section 4, and your rights under GDPR (access, erasure, portability, restriction, objection) are honored as described in Section 13.',
+      },
+      {
+        title: '17. Changes to This Policy',
         body: 'We may update this Privacy Policy from time to time. The "Last updated" date at the top will reflect any changes. Continued use of the app after changes constitutes acceptance of the updated policy.',
       },
     ],
@@ -254,7 +266,19 @@ const content: ContentMap = {
         note: 'Para exercer esses direitos, entre em contato pelo jfsimon.pro@gmail.com ou use Configurações → Excluir Conta para solicitação de exclusão.',
       },
       {
-        title: '14. Alterações nesta Política',
+        title: '14. Encarregado de Dados (LGPD Art. 41)',
+        body: 'Nos termos do Art. 41 da LGPD, designamos um Encarregado de Dados responsável por receber comunicações dos titulares e da ANPD:\n\nNome: Jaime Simon\nE-mail: jfsimon.pro@gmail.com\n\nVocê pode contatar o Encarregado a qualquer momento para exercer seus direitos, registrar reclamações ou solicitar informações sobre o tratamento de seus dados.',
+      },
+      {
+        title: '15. Incidentes de Segurança e Notificação (LGPD Art. 48)',
+        body: 'Em caso de incidente de segurança que possa acarretar risco ou dano relevante aos titulares, iremos:\n\n• Notificar a ANPD (Autoridade Nacional de Proteção de Dados) em até 2 dias úteis após a ciência do incidente, conforme exige o Art. 48 da LGPD.\n• Notificar os usuários afetados prontamente pelo e-mail cadastrado na conta.\n• A notificação conterá: natureza dos dados afetados, informações sobre os titulares envolvidos, medidas técnicas e de segurança adotadas, e os riscos relacionados ao incidente.',
+      },
+      {
+        title: '16. Usuários da União Europeia (GDPR)',
+        body: 'Se você está localizado na União Europeia ou no Espaço Econômico Europeu, observe:\n\n• O Brasil ainda não possui uma decisão de adequação da UE. As transferências de dados da UE para o Brasil são realizadas com base no seu consentimento explícito e na necessidade de execução do contrato.\n• Você tem o direito de registrar reclamação junto à autoridade supervisora de proteção de dados do seu país.\n• Não possuímos representante formal na UE conforme exige o Art. 27 do GDPR. Se você é residente na UE e usa este serviço regularmente, recomendamos contato direto pelo jfsimon.pro@gmail.com para questões de proteção de dados.\n• As bases legais para tratamento dos seus dados permanecem conforme descrito na Seção 4, e seus direitos sob o GDPR (acesso, exclusão, portabilidade, restrição, oposição) são garantidos conforme descrito na Seção 13.',
+      },
+      {
+        title: '17. Alterações nesta Política',
         body: 'Podemos atualizar esta Política periodicamente. A data de "Última atualização" no topo refletirá qualquer alteração. O uso continuado do app após as alterações constitui aceitação da política atualizada.',
       },
     ],
@@ -380,7 +404,19 @@ const content: ContentMap = {
         note: 'Para ejercer estos derechos, contáctenos en jfsimon.pro@gmail.com o use Configuración → Eliminar cuenta.',
       },
       {
-        title: '14. Cambios en esta Política',
+        title: '14. Responsable de Protección de Datos (Encarregado — LGPD Art. 41)',
+        body: 'De conformidad con el Art. 41 de la LGPD, hemos designado un Responsable de Protección de Datos (Encarregado de Dados) para recibir comunicaciones de los titulares y la ANPD:\n\nNombre: Jaime Simon\nCorreo: jfsimon.pro@gmail.com\n\nPuede contactar al Responsable en cualquier momento para ejercer sus derechos, presentar quejas o solicitar información sobre el tratamiento de sus datos.',
+      },
+      {
+        title: '15. Incidentes de Seguridad y Notificación (LGPD Art. 48)',
+        body: 'En caso de un incidente de seguridad que pueda generar riesgo o daño a los titulares, procederemos a:\n\n• Notificar a la ANPD (Autoridade Nacional de Proteção de Dados) dentro de los 2 días hábiles posteriores a tomar conocimiento del incidente, según exige el Art. 48 de la LGPD.\n• Notificar a los usuarios afectados de forma oportuna al correo electrónico registrado en su cuenta.\n• La notificación incluirá: naturaleza de los datos afectados, información sobre los titulares involucrados, medidas técnicas y de seguridad adoptadas, y los riesgos relacionados con el incidente.',
+      },
+      {
+        title: '16. Usuarios de la Unión Europea (GDPR)',
+        body: 'Si usted se encuentra en la Unión Europea o el Espacio Económico Europeo, tenga en cuenta:\n\n• Brasil aún no cuenta con una decisión de adecuación de la UE. Las transferencias de datos de la UE a Brasil se realizan con base en su consentimiento explícito y la necesidad de ejecución del contrato.\n• Tiene derecho a presentar una queja ante la autoridad supervisora de protección de datos de su país.\n• No contamos con un representante formal en la UE conforme al Art. 27 del GDPR. Si usted es residente en la UE y usa este servicio regularmente, le recomendamos contactarnos directamente en jfsimon.pro@gmail.com.\n• Las bases legales para el tratamiento de sus datos son las descritas en la Sección 4, y sus derechos bajo el GDPR (acceso, supresión, portabilidad, limitación, oposición) se garantizan conforme a la Sección 13.',
+      },
+      {
+        title: '17. Cambios en esta Política',
         body: 'Podemos actualizar esta Política periódicamente. La fecha de "Última actualización" al inicio reflejará los cambios. El uso continuado de la app tras los cambios constituye aceptación de la política actualizada.',
       },
     ],
