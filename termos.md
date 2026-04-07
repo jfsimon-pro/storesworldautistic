@@ -18,37 +18,38 @@ Ambas estão linkadas no rodapé da tela de login (`app/(signin)/signIn/page.tsx
 ### Política de Privacidade (`/privacy`)
 
 1. Quem somos (empresa, controlador de dados, contato)
-2. O que coletamos — nome, email, senha (hash), Apple ID, dados de uso, cookie de sessão, permissões de câmera/mic
-3. Base legal (LGPD / GDPR) — execução de contrato, interesse legítimo, consentimento
-4. Como usamos os dados — autenticação, personalização, suporte, e-mail transacional
-5. **Terceiros processadores** — Neon (DB), DigitalOcean (hosting), Apple (auth), Gmail SMTP (suporte)
-6. **Transferência internacional** — dados nos EUA, base LGPD Art. 33
-7. **Cookies / token de sessão** — httpOnly, sem publicidade, sem rastreamento
-8. Armazenamento e segurança — TLS, bcrypt
-9. Retenção — dados deletados em 30 dias após exclusão de conta
-10. Permissões de dispositivo — câmera e microfone
-11. Privacidade infantil — menores de 13, consentimento parental
-12. Direitos do usuário — acesso, correção, exclusão, ANPD
-13. Alterações na política
-14. Contato e controlador de dados
+2. Dados coletados — nome, email, senha (hash), Apple ID, **progresso educacional**, **status de assinatura (Hotmart)**, **token push**, cookie de sessão, permissões de câmera/mic
+3. **Dados de saúde e dados sensíveis (LGPD Art. 11)** — TEA é dado sensível, base legal explícita, proibição de compartilhamento comercial
+4. Base legal por dado (LGPD) — execução de contrato, interesse legítimo, consentimento explícito
+5. Como usamos os dados — autenticação, personalização, assinatura, push, suporte, e-mail transacional
+6. **Terceiros processadores** — Neon (DB), DigitalOcean (hosting), **Hotmart (pagamentos)**, Apple (auth), Gmail SMTP (suporte)
+7. **Transferência internacional** — dados nos EUA, base LGPD Art. 33
+8. **Cookies / token de sessão** — httpOnly, sem publicidade, sem rastreamento
+9. Armazenamento e segurança — TLS, bcrypt
+10. Retenção — todos os dados deletados em 30 dias após exclusão de conta
+11. Permissões de dispositivo — câmera, microfone e **push notifications**
+12. Privacidade infantil — menores de 13, consentimento parental
+13. **Direitos do usuário (Art. 18 da LGPD)** — todos os 9 direitos listados, canal de contato
+14. Alterações na política
 
 ### Termos de Uso (`/terms`)
 
 1. Aceitação dos termos
-2. Descrição do serviço
-3. Elegibilidade e consentimento parental
-4. Responsabilidade da conta
-5. Uso aceitável (lista de proibições)
-6. Propriedade intelectual
-7. **Isenção médica** — não é dispositivo médico, não diagnostica nem trata
-8. **Ausência de garantias** — "as is", sem garantia de disponibilidade
-9. **Limitação de responsabilidade** — danos indiretos, teto = valor pago
-10. **Indenização** — usuário indeniza a empresa por violações
-11. Disponibilidade do serviço
-12. Encerramento de conta
-13. Lei aplicável — Brasil, LGPD
-14. Alterações nos termos
-15. Contato
+2. **O que é a plataforma** — descrição clara, explicitando que NÃO é dispositivo médico
+3. **Elegibilidade e cadastro** — idade mínima 18, uma conta por pessoa, dados precisos
+4. **Assinatura, pagamento e cancelamento** — Hotmart, cobrança, cancelamento, reembolso (7 dias)
+5. Responsabilidade da conta
+6. Uso aceitável (lista de proibições)
+7. Propriedade intelectual
+8. **Isenção médica** — não diagnostica, não trata, não substitui profissional de saúde
+9. **Ausência de garantias** — "as is"
+10. **Limitação de responsabilidade** — danos indiretos, teto = valor pago
+11. **Indenização** — usuário indeniza a empresa por violações
+12. Disponibilidade do serviço
+13. Encerramento de conta
+14. **Foro — comarca de São Paulo, Estado de São Paulo, Brasil**
+15. Alterações nos termos
+16. Contato
 
 ---
 
@@ -209,5 +210,5 @@ import { useLanguage } from '../../context/LanguageContext';
 | Cookie banner interativo | Se usar Google Analytics, Meta Pixel, ou qualquer cookie de rastreamento |
 | Assinatura eletrônica dos termos | Se precisar de prova legal de aceite (ex: contrato, pagamento) |
 | DPA formal com terceiros | Se tiver base de usuários europeus relevante (GDPR Art. 28) |
-| Política de reembolso | Se o app tiver compras in-app ou assinatura |
+| Política de reembolso detalhada | Coberta de forma básica (7 dias). Para reembolsos mais complexos, referenciar política da Hotmart |
 | COPPA (EUA) | Se tiver usuários nos EUA menores de 13 |
