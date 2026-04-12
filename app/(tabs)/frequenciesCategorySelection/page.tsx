@@ -56,21 +56,21 @@ export default function FrequenciesCategorySelectionPage() {
                         className={styles.infoHeader}
                         onClick={() => setShowInstructions(!showInstructions)}
                     >
-                        <span className={styles.infoTitleText}>📌 Instructions</span>
+                        <span className={styles.infoTitleText}>{t('frequencies.instructionsTitle')}</span>
                         <span className={styles.arrow}>▼</span>
                     </div>
 
                     <div className={styles.infoContentWrapper}>
                         <div className={styles.infoContentInner}>
-                            <p>🚨 Please follow the sound therapy usage instructions:</p>
+                            <p>{t('frequencies.instructionsIntro')}</p>
                             <ul className={styles.infoList}>
-                                <li>The chosen sound frequencies should be applied daily, according to the child's needs</li>
-                                <li>The listening period for each one should be at least 30 minutes, but may be extended up to 2 hours.</li>
-                                <li>The use of headphones is optional; if the child does not like them, use speakers with ambient sounds placed close to them.</li>
+                                <li>{t('frequencies.instruction1')}</li>
+                                <li>{t('frequencies.instruction2')}</li>
+                                <li>{t('frequencies.instruction3')}</li>
                             </ul>
-                            <p>The frequencies can be applied according to each child's routine, but it is essential that they receive stimulation in the morning, in the afternoon, and before bedtime.</p>
-                            <p>If you have any questions, we are available through our support channels.</p>
-                            <p>✨ We wish you great success on this journey!</p>
+                            <p>{t('frequencies.instructionsRoutine')}</p>
+                            <p>{t('frequencies.instructionsSupport')}</p>
+                            <p>{t('frequencies.instructionsWish')}</p>
                         </div>
                     </div>
                 </div>

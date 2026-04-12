@@ -108,7 +108,15 @@
         "loadingCategories": "Cargando categorías...",
         "noCategories": "Sin categorías disponibles",
         "loadingFrequencies": "Cargando frecuencias...",
-        "noFrequencies": "No se encontraron frecuencias para esta categoría."
+        "noFrequencies": "No se encontraron frecuencias para esta categoría.",
+        "instructionsTitle": "📌 Instrucciones",
+        "instructionsIntro": "🚨 Por favor, sigue las instrucciones de uso de la sonoterapia:",
+        "instruction1": "Las frecuencias sonoras elegidas deben aplicarse diariamente, según las necesidades del niño",
+        "instruction2": "El período de escucha de cada una debe ser de al menos 30 minutos, pero puede extenderse hasta 2 horas.",
+        "instruction3": "El uso de auriculares es opcional; si al niño no le gustan, usa altavoces con sonidos ambientales colocados cerca de él.",
+        "instructionsRoutine": "Las frecuencias pueden aplicarse según la rutina de cada niño, pero es fundamental que reciba estimulación por la mañana, por la tarde y antes de dormir.",
+        "instructionsSupport": "Si tienes alguna pregunta, estamos disponibles a través de nuestros canales de soporte.",
+        "instructionsWish": "✨ ¡Te deseamos mucho éxito en este camino!"
     },
     "levels": {
         "selectLevel": "Selecciona el Nivel",

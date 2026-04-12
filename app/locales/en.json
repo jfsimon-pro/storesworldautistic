@@ -114,7 +114,15 @@
         "loadingCategories": "Loading categories...",
         "noCategories": "No categories available",
         "loadingFrequencies": "Loading frequencies...",
-        "noFrequencies": "No frequencies found for this category."
+        "noFrequencies": "No frequencies found for this category.",
+        "instructionsTitle": "📌 Instructions",
+        "instructionsIntro": "🚨 Please follow the sound therapy usage instructions:",
+        "instruction1": "The chosen sound frequencies should be applied daily, according to the child's needs",
+        "instruction2": "The listening period for each one should be at least 30 minutes, but may be extended up to 2 hours.",
+        "instruction3": "The use of headphones is optional; if the child does not like them, use speakers with ambient sounds placed close to them.",
+        "instructionsRoutine": "The frequencies can be applied according to each child's routine, but it is essential that they receive stimulation in the morning, in the afternoon, and before bedtime.",
+        "instructionsSupport": "If you have any questions, we are available through our support channels.",
+        "instructionsWish": "✨ We wish you great success on this journey!"
     },
     "levels": {
         "selectLevel": "Select Level",
